@@ -37,12 +37,16 @@ function App() {
   const [selectedTrekType, setSelectedTrekType] = useState<TrekType>('treks');
   const [selectedTeam, setSelectedTeam] = useState<Team>('ground-ops');
   
-  // Sample trek info - in production, this would come from your booking system
-  const [trekInfo] = useState<TrekInfo>({
+  // Trek info with editable dates
+  const [trekInfo, setTrekInfo] = useState<TrekInfo>({
     name: 'Hampta Pass Trek',
     startDate: new Date('2025-06-15'),
     firstBookingDate: new Date('2025-03-01')
   });
+
+  const updateTrekInfo = (updatedInfo: Partial<TrekInfo>) => {
+    setTrekInfo(prev => ({ ...prev, ...updatedInfo }));
+  };
 
   // Sample tasks - in production, these would be templates from your database
   const [tasks, setTasks] = useState<Task[]>([
@@ -814,7 +818,7 @@ function App() {
 
       <div className="p-4 space-y-4">
         {/* Trek Info */}
-        <TrekInfoCard trekInfo={trekInfo} />
+        <TrekInfoCard trekInfo={trekInfo} onUpdateTrekInfo={updateTrekInfo} />
 
         {/* Selectors */}
         <div className="space-y-3">
